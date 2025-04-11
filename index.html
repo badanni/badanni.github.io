@@ -30,62 +30,7 @@
                 <p>Soy un autodidacta y emprendedor por naturaleza. Mi enfoque se dirige hacia el diseño de ingeniería, abarcando tanto el diseño electrónico como la automatización y control, la metrología y la tecnología de la información. Soy altamente responsable, creativo, proactivo y puntual, ya que considero que estas cualidades son fundamentales para el buen desempeño en cualquier tarea. Me encantan los desafíos, ya que creo que fortalecen nuestra capacidad de adaptación y crecimiento en el día a día.</p>
             </div>
         </section>
-        <section class="section">
-            <h2>Mas</h2>
-            <div class="experience-item">
-                <ul>
-                    <li><a href="resume.html">CV</a></li>
-                    <li>Badges</li>
-                </ul>
-            </div>
-        </section>
     </div>
-
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const button = document.querySelector('.theme-toggle');
-            button.textContent = document.body.classList.contains('dark-mode') 
-                ? 'Modo Claro' 
-                : 'Modo Oscuro';
-        }
-
-        // Animación suave al cargar
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '1';
-        });
-
-        // Efecto de aparición al hacer scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        });
-
-        document.querySelectorAll('.section').forEach((section) => {
-            section.style.opacity = 0;
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'all 0.5s ease-out';
-            observer.observe(section);
-        });
-    </script>
-    <script>
-        // Animación para las barras de idiomas
-        const languageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const bar = entry.target;
-                    bar.style.width = bar.dataset.level;
-                }
-            });
-        });
-    
-        document.querySelectorAll('.bar-fill').forEach(bar => {
-            languageObserver.observe(bar);
-        });
-    </script>
+    <script src="js/base.js"></script>
 </body>
 </html>
