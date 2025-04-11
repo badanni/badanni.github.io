@@ -1,0 +1,270 @@
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --primary-color: #2d3436;
+            --secondary-color: #0984e3;
+            --text-color: #2d3436;
+            --bg-color: #ffffff;
+        }
+
+        body.dark-mode {
+            --primary-color: #f5f6fa;
+            --secondary-color: #74b9ff;
+            --text-color: #f5f6fa;
+            --bg-color: #2d3436;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 80%;
+            background: var(--secondary-color);
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .date {
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        @media print {
+            .theme-toggle {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+        }
+    
+        .language-bars {
+            display: grid;
+            gap: 1.2rem;
+        }
+    
+        .language-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            align-items: center;
+            gap: 1rem;
+        }
+    
+        .bar-container {
+            height: 8px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+    
+        .bar-fill {
+            height: 100%;
+            background: var(--secondary-color);
+            width: 0;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+    
+        .bar-fill::after {
+            content: attr(data-level);
+            position: absolute;
+            right: 5px;
+            top: -20px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+    
+        @media (max-width: 480px) {
+            .language-item {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        a {
+            color: inherit; /* Hereda el color del texto padre */
+            text-decoration: none; /* Elimina el subrayado */
+            transition: opacity 0.3s ease; /* Transición suave para hover */
+        }
+
+        a:hover,
+        a:focus {
+            opacity: 0.8; /* Efecto sutil al pasar el mouse */
+            text-decoration: none; /* Asegura que no aparezca subrayado */
+        }
+
+        a:active {
+            opacity: 0.6; /* Efecto al hacer clic */
+        }
+
+        /* Opcional: Mantener el color en modo oscuro */
+        body.dark-mode a {
+            color: var(--text-color);
+        }
+
+        /* Si quieres que los enlaces en texto mantengan el estilo normal */
+        .plain-link {
+            cursor: text !important;
+            pointer-events: none !important;
+        }
+    
+        .main-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-color);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+    
+        .main-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+    
+        .main-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+    
+        .main-menu a:hover::after {
+            width: 100%;
+        }
+    
+        /* Ajuste para no solapar con el contenido */
+        .container {
+            margin-top: 70px; /* Ajusta según la altura de tu menú */
+        }
+    
+        @media (max-width: 768px) {
+            .main-menu {
+                gap: 1.5rem;
+                padding: 0.8rem 0;
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                margin-top: 60px;
+            }
+        }
+        @media print {
+        .main-menu {
+            display: none !important;
+        }
+        
+        .container {
+            margin-top: 0;
+        }
