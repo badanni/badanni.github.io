@@ -6,6 +6,7 @@
     <meta name=description content="Let's build our future. 🚀">
     <meta name=author content="Danny vasconez">
     <title>Home | Danny V&aacute;sconez</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         /* Reset básico */
         * {
@@ -188,6 +189,34 @@
             }
         }
     </style>
+    <style>
+        a {
+            color: inherit; /* Hereda el color del texto padre */
+            text-decoration: none; /* Elimina el subrayado */
+            transition: opacity 0.3s ease; /* Transición suave para hover */
+        }
+
+        a:hover,
+        a:focus {
+            opacity: 0.8; /* Efecto sutil al pasar el mouse */
+            text-decoration: none; /* Asegura que no aparezca subrayado */
+        }
+
+        a:active {
+            opacity: 0.6; /* Efecto al hacer clic */
+        }
+
+        /* Opcional: Mantener el color en modo oscuro */
+        body.dark-mode a {
+            color: var(--text-color);
+        }
+
+        /* Si quieres que los enlaces en texto mantengan el estilo normal */
+        .plain-link {
+            cursor: text !important;
+            pointer-events: none !important;
+        }
+    </style>
 </head>
 <body>
     <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
@@ -196,8 +225,8 @@
         <header>
             <h1 class="name">Danny V&aacute;sconez</h1>
             <div class="contact-info">
-                <span>📧 danny@vasconez.wrok</span>
-                <span>📱 +593-1234567</span>
+                <span>📧 <a href="mailto:danny@vasconez.work">danny@vasconez.work</a></span>
+                <span><i class="bi bi-linkedin"></i> <a  href="https://www.linkedin.com/in/danny-v%C3%A1sconez-3882103a/">LinkedIn</a></span>
                 <span>📍 Quito, Ecuador</span>
             </div>
         </header>
