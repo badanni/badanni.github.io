@@ -17,10 +17,13 @@
         
         <!-- Navegación -->
         <nav class="main-menu">
-            <a href="index.html"><i class="bi bi-fingerprint"></i> BIO</a>
-            <a href="resume.html"><i class="bi bi-person-circle"></i> CV</a>
+            <div class="nav-links">
+                <a href="index.html"><i class="bi bi-fingerprint"></i> BIO</a>
+                <a href="resume.html" class="active"><i class="bi bi-person-circle"></i> CV</a>
+            </div>
             <button class="theme-toggle" @click="toggleTheme">
-                {{ isDark ? 'Modo Claro' : 'Modo Oscuro' }}
+                <i :class="isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
+                <span>{{ isDark ? 'Claro' : 'Oscuro' }}</span>
             </button>
         </nav>
 
