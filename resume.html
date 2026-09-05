@@ -54,6 +54,19 @@
                 <div class="date">{{ job.period }}</div>
                 <p>{{ job.company }}</p>
                 <ul>
+                    <li v-for="(detail, dIndex) in job.details" :key="dIndex">{{ detail.text }} <a v-if="detail.link" :href="detail.link" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección Educación -->
+        <section class="section" v-if="cv.education">
+            <h2>Educación</h2>
+            <div class="experience-item" v-for="(job, index) in cv.education" :key="index">
+                <h3>{{ job.name }}</h3>
+                <div class="date">{{ job.period }}</div>
+                <p>{{ job.university }}</p>
+                <ul>
                     <li v-for="(detail, dIndex) in job.details" :key="dIndex">{{ detail }}</li>
                 </ul>
             </div>

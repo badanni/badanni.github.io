@@ -28,13 +28,38 @@
       "period": "2021 - Actualidad",
       "company": "Precitrol S.A.",
       "details": [
-        "Responsable del laboratorio de Calibración en el ámbito de Calidad y técnico a nivel nacional.",
-        "Garantizar la integridad del sistema de gestión en base a NTE INEN/ISO 17025.",
-        "Validación y verificación de los procedimientos de calibración según los alcances del laboratorio.",
-        "Asegurar y mantener la competencia del personal técnico metrólogo del laboratorio.",
-        "Respaldo técnico para el Responsable Técnico del laboratorio de Calibración.",
-        "Gestión, mantenimiento, soporte y actualización de la infraestructura interna del Laboratorio.",
-        "Diseño e implementación de herramientas, software, metodologias para los requerimientos del Laboratorio"
+        {
+          "text":"Acreditado por el Servicio de Acreditación Ecuatoriano (SAE), documento de autorización.",
+          "link":"https://drive.google.com/file/d/1K5PR75SSTbs2t528oPMIl4stJqovJ9Em/view?usp=drive_link"
+        },
+        {
+          "text":"Responsable del laboratorio de Calibración en el ámbito de Calidad y técnico a nivel nacional.",
+          "link":null
+        },
+        {
+          "text":"Garantizar la integridad del sistema de gestión en base a NTE INEN/ISO 17025.",
+          "link":null
+        },
+        {
+          "text":"Validación y verificación de los procedimientos de calibración según los alcances del laboratorio.",
+          "link":null
+        },
+        {
+          "text":"Asegurar y mantener la competencia del personal técnico metrólogo del laboratorio.",
+          "link":null
+        },
+        {
+          "text":"Respaldo técnico para el Responsable Técnico del laboratorio de Calibración.",
+          "link":null
+        },
+        {
+          "text":"Gestión, mantenimiento, soporte y actualización de la infraestructura interna del Laboratorio.",
+          "link":null
+        },
+        {
+          "text":"Diseño e implementación de herramientas, software, metodologias para los requerimientos del Laboratorio.",
+          "link":null
+        }
       ]
     },
     {
@@ -42,11 +67,40 @@
       "period": "2020 - 2021",
       "company": "Precitrol S.A.",
       "details": [
-        "Validación, verificación de métodos y cálculo de incertidumbres.",
-        "Apoyo al responsable técnico del Laboratorio.",
-        "Calibración de pesas y balanzas.",
-        "Ajuste y mantenimiento de equipos de medición de masas."
+        {
+          "text":"Validación, verificación de métodos y cálculo de incertidumbres.",
+          "link":null
+        },
+        {
+          "text":"Apoyo al responsable técnico del Laboratorio.",
+          "link":null
+        },
+        {
+          "text":"Calibración de pesas y balanzas.",
+          "link":null
+        },
+        {
+          "text":"Ajuste y mantenimiento de equipos de medición de masas.",
+          "link":null
+        }
       ]
+    }
+  ],
+  "education": [
+    {
+      "name": "Diplomado en Gestión de Riesgos y Manejo de Crisis",
+      "period": "2021 - 2022",
+      "university": "Universidad de las Américas - UDLA"
+    },
+    {
+      "name": "Maestría en tecnologías de la información mención en seguridad y comunicación",
+      "period": "2017 - 2019",
+      "university": "Universidad Internacional SEK"
+    },
+    {
+      "name": "Ingeniero electrónico en automatización y control",
+      "period": "2006 - 2012",
+      "university": "Escuela Politécnica del Ejercito - ESPE"
     }
   ],
   "skills": [
@@ -55,6 +109,7 @@
   ],
   "languages": [
     { "name": "Español", "level": "100%" },
+    { "name": "LSE-Ecuador", "level": "10%" },
     { "name": "Inglés", "level": "82%" },
     { "name": "Portugués", "level": "90%" }
   ]
