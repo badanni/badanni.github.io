@@ -84,7 +84,92 @@
           "link":null
         }
       ]
+    },
+    {
+      "role": "Independiente",
+      "period": "2017 - 2020",
+      "company": "Independiente",
+      "details": [
+        {
+          "text":"Diseño, mantenimiento e implementación de sistemas de seguridad física y ambiental, iluminación, detección y extinción de incendios.",
+          "link":null
+        },
+        {
+          "text":"Mantenimiento e implementación de sistemas de alimentación ininterrumpida (UPS siglas en ingles).",
+          "link":null
+        },
+        {
+          "text":"Diseño, mantenimiento e implementación de sistemas de sistemas eléctricos.",
+          "link":null
+        },
+        {
+          "text":"Soporte e implementación de sistemas informáticos como servidor de correos, web, sistemas SNMP en equipos eléctricos, CCTV, control de acceso.",
+          "link":null
+        },
+        {
+          "text":"Manejo y atención de servicios en linea como correo, servidor web, servicio de encuesta (Lime Survey), etc.",
+          "link":null
+        },
+        {
+          "text":"Diseño de aplicaciones a medida en Python, Java, y diseño de HMI para procesos.",
+          "link":null
+        }     
+      ]
+    },
+    {
+      "role": "Ingeniero de Servicio e implementación",
+      "period": "2013 - 2017",
+      "company": "Surge Ingeniería",
+      "details": [
+        {
+          "text":"Diseño e implementación de centros de datos e infraestructura de soporte.",
+          "link":null
+        },
+        {
+          "text":"Diseño e implementación de sistemas de iluminación.",
+          "link":null
+        },
+        {
+          "text":"Implementación de sistemas de detección y extinción de incendios.",
+          "link":null
+        },
+        {
+          "text":"Atención al cliente, manejo y coordinación de equipos de trabajo.",
+          "link":null
+        },
+        {
+          "text":"Mantenimiento en centros de datos, sistemas de monitorio ambiental, sistemas SNMP, UPS, aires acondicionados, DCIM, detección y extinción de incendios, tableros eléctricos, grupo electrógenos, sistemas CCTV, control de accesos.",
+          "link":null
+        }  
+      ]
+    },
+    {
+      "role": "I+D",
+      "period": "2012 - 2013",
+      "company": "SOTUS - Soluciones tecnológicas urbanas (Emprendimiento)",
+      "details": [
+        {
+          "text":"Diseño de hardware.",
+          "link":null
+        },
+        {
+          "text":"Arquitectura de software.",
+          "link":null
+        },
+        {
+          "text":"Implementación de programas en Python, Java, C++ para Windows y GNU/Linux.",
+          "link":null
+        },
+        {
+          "text":"Implementación de prototipos.",
+          "link":null
+        }     
+      ]
     }
+  ],
+  "courses":[
+    {"details":"Estadística aplicada a la metrología, Febrero 2025, 70 horas, MetrologíaFácil, México", "link":"www.google.com"},
+    {"details":"Estadística aplicada a la metrología, Febrero 2025, 70 horas, MetrologíaFácil, México", "link":null}
   ],
   "education": [
     {

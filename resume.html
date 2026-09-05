@@ -72,6 +72,16 @@
             </div>
         </section>
 
+        <!-- Sección Experiencia -->
+        <section class="section" v-if="cv.courses">
+            <h2>Cursos y Certificados</h2>
+            <div class="experience-item">
+                <ul v-for="(job, index) in cv.courses" :key="index">
+                    <li :key="index">{{ job.details }} <a v-if="job.link" :href="job.link" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a></li>
+                </ul>
+            </div>
+        </section>
+
         <!-- Sección Habilidades -->
         <section class="section" v-if="cv.skills">
             <h2>Habilidades</h2>
