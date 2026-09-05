@@ -2,55 +2,189 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <meta name=description content="Let's build our future. 🚀">
-    <meta name=author content="Danny vasconez">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Let's build our future. 🚀">
+    <meta name="author" content="Danny vasconez">
     <title>Home | Danny V&aacute;sconez</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="stylesheets/base.css">
+    
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div id="app" class="container">
+
         <nav class="main-menu">
             <a href="index.html"><i class="bi bi-fingerprint"></i> BIO</a>
             <a href="resume.html"><i class="bi bi-person-circle"></i> CV</a>
-            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <button class="theme-toggle" @click="handleToggleTheme">{{ isDarkMode ? 'Modo Claro' : 'Modo Oscuro' }}</button>
         </nav>
-        <header>
-            <h1 class="name">Danny V&aacute;sconez</h1>
+
+        <!-- Header -->
+        <header v-if="profile">
+            <h1 class="name">{{ profile.name }}</h1>
             <div class="contact-info">
-                <span><i class="bi bi-envelope-at"></i> <a href="mailto:danny@vasconez.work">danny@vasconez.work</a></span>
-                <span><i class="bi bi-linkedin"></i> <a  href="https://www.linkedin.com/in/danny-v%C3%A1sconez-3882103a/">LinkedIn</a></span>
-                <span><i class="bi bi-geo"></i> Quito, Ecuador</span>
+                <span v-if="profile.email"><i class="bi bi-envelope-at"></i> <a :href="'mailto:' + profile.email">{{ profile.email }}</a></span>
+                <span v-if="profile.linkedin"><i class="bi bi-linkedin"></i> <a :href="profile.linkedin" target="_blank">LinkedIn</a></span>
+                <span v-if="profile.location"><i class="bi bi-geo"></i> {{ profile.location }}</span>
             </div>
         </header>
-        <section class="section">
+
+        <!-- Quien soy -->
+        <section class="section" v-if="profile && profile.bio">
             <h2>Quien soy</h2>
             <div class="experience-item">
-                <p>Soy autodidacta y emprendedor por naturaleza. Mi enfoque se dirige hacia el diseño de ingeniería, abarcando tanto el diseño electrónico como la automatización y control, la metrología y la tecnología de la información. Soy altamente responsable, creativo, proactivo y puntual, ya que considero que estas cualidades son fundamentales para el buen desempeño en cualquier tarea. Me encantan los desafíos, ya que creo que fortalecen nuestra capacidad de adaptación y crecimiento en el día a día.</p>
+                <p>{{ profile.bio }}</p>
             </div>
         </section>
-        <section class="section">
+
+        <!-- Badges Credly -->
+        <section class="section" v-if="badges && badges.length">
             <h2>Badges</h2>
-            <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="5de3b8ea-ce6b-4553-9ec5-ea6fdbbb8306" data-share-badge-host="https://www.credly.com"></div>
-            <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="38a6865e-01d0-40bf-a066-af9cd4722f52" data-share-badge-host="https://www.credly.com"></div>
+            <div v-for="badgeId in badges" 
+                 :key="badgeId"
+                 data-iframe-width="150" 
+                 data-iframe-height="270" 
+                 :data-share-badge-id="badgeId" 
+                 data-share-badge-host="https://www.credly.com">
+            </div>
         </section>
-        <section class="section">
+
+        <!-- Academia -->
+        <section class="section" v-if="academic && academic.length">
             <h2>Academia</h2>
-            <div class="cert_badge" cert_logo="images/logo_espe.webp" cert_href="descarga.png" cert_name="INGENIERO EN ELECTRONICA, AUTOMATIZACION Y CONTROL" cert_type="Bacheilor's Degree" cert_issuer="ESPE">INGENIERO EN ELECTRONICA, AUTOMATIZACION Y CONTROL</div>
-            <div class="cert_badge" cert_logo="images/uisek.jpg" cert_href="descarga.png" cert_name="MAGISTER EN TECNOLOGIAS DE LA INFORMACION MENCIÓN EN SEGURIDAD DE REDES Y COMUNICACIONES" cert_type="Master's Degree" cert_issuer="UISEK">MAGISTER EN TECNOLOGIAS DE LA INFORMACION MENCIÓN EN SEGURIDAD DE REDES Y COMUNICACIONES</div>
+            <div class="badges-grid">
+                <div v-for="(item, index) in academic" :key="index" class="cert_badge">
+                    <a :href="item.href || '#'" target="_blank" rel="noopener noreferrer" class="cert_card">
+                        <div class="cert_body">
+                            <div class="cert_img_wrapper">
+                                <img :src="item.logo" :alt="item.name" class="cert_img">
+                            </div>
+                            <div class="cert_container">
+                                <div class="cert_name">{{ item.name }}</div>
+                                <div class="cert_issuer" v-if="item.issuer">ISSUER: {{ item.issuer.toUpperCase() }}</div>
+                                <div class="cert_type" v-if="item.type">{{ item.type }}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </section>
-        <section class="section">
+
+        <!-- Cursos -->
+        <section class="section" v-if="courses && courses.length">
             <h2>Cursos</h2>
-            <div class="cert_badge" cert_logo="images/python_institute.png" cert_href="docs/PCEP_Certificado.pdf" cert_name="Certified Entry Level Python Programmer" cert_type="Certificate" cert_issuer="Python Institute">PCEP</div>
-            <div class="cert_badge" cert_logo="images/logo-udla-300x224.png" cert_href="docs/Diplomado_en_Gesti_n_de_Riesgos_y_Manejo_de_Crisis_Badge20220224-53-101rm68.pdf" cert_name="Diplomado en Gestión de Riesgos y Manejo de Crisis" cert_type="Certificate" cert_issuer="UDLA">Diplomado en Gestión de Riesgos y Manejo de Crisis</div>
-            <div class="cert_badge" cert_logo="images/ministerio-trabajo.webp" cert_href="descarga.png" cert_name="ENTORNO, PLANEAMIENTO, IDENTIFICACIÓN, MEDICIÓN Y EVALUACIÓN DE GESTIÓN DE RIESGOS" cert_type="Course" cert_issuer="MDT">ENTORNO, PLANEAMIENTO, IDENTIFICACIÓN, MEDICIÓN Y EVALUACIÓN DE GESTIÓN DE RIESGOS</div>
-            <div class="cert_badge" cert_logo="images/ministerio-trabajo.webp" cert_href="descarga.png" cert_name="Análisis de riesgos en empresas de alimentos" cert_type="Course" cert_issuer="MDT">Análisis de riesgos en empresas de alimentos</div>
-            <div class="cert_badge" cert_logo="images/metrologiafacil.png" cert_href="docs/estadistica_aplicada_metrologia.pdf" cert_name="Estadistica aplicada a la metrologia" cert_type="Course" cert_issuer="MEtROLOGIAFACIL">ESTADISTICA APLICADA A LA METROLOGIA</div>
+            <div class="badges-grid">
+                <div v-for="(course, index) in courses" :key="index" class="cert_badge">
+                    <a :href="course.href || '#'" target="_blank" rel="noopener noreferrer" class="cert_card">
+                        <div class="cert_body">
+                            <div class="cert_img_wrapper">
+                                <img :src="course.logo" :alt="course.name" class="cert_img">
+                            </div>
+                            <div class="cert_container">
+                                <div class="cert_name">{{ course.name }}</div>
+                                <div class="cert_issuer" v-if="course.issuer">ISSUER: {{ course.issuer.toUpperCase() }}</div>
+                                <div class="cert_type" v-if="course.type">{{ course.type }}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </section>
+
     </div>
+
+    <!-- Script base -->
     <script src="js/base.js"></script>
-    <script src="js/badge.js"></script>
-    <script type="text/javascript" async src="https://cdn.credly.com/assets/utilities/embed.js"></script>
+
+    <script>
+        const { createApp, ref, onMounted, nextTick } = Vue;
+
+        createApp({
+            setup() {
+                const profile = ref(null);
+                const badges = ref([]);
+                const academic = ref([]);
+                const courses = ref([]);
+                const isDarkMode = ref(false);
+
+                const initScrollObserver = () => {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    document.querySelectorAll('.section').forEach((section) => {
+                        section.style.opacity = '0';
+                        section.style.transform = 'translateY(20px)';
+                        section.style.transition = 'all 0.5s ease-out';
+                        observer.observe(section);
+                    });
+                };
+
+                const loadData = async () => {
+                    try {
+                        const response = await fetch('./data.json');
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        
+                        let data = await response.json();
+                        
+                        if (data._default) {
+                            const keys = Object.keys(data._default);
+                            if (keys.length > 0) {
+                                const firstRecord = data._default[keys[0]];
+                                data = (firstRecord && firstRecord.profile) ? firstRecord : data._default;
+                            }
+                        }
+
+                        profile.value = data.profile || null;
+                        badges.value = Array.isArray(data.badges) ? data.badges : [];
+                        academic.value = Array.isArray(data.academic) ? data.academic : [];
+                        courses.value = Array.isArray(data.courses) ? data.courses : [];
+
+                    } catch (error) {
+                        console.error("Error al cargar datos:", error);
+                    } finally {
+                        await nextTick();
+
+                        if (badges.value.length > 0) {
+                            const credlyScript = document.createElement('script');
+                            credlyScript.src = "https://cdn.credly.com/assets/utilities/embed.js";
+                            credlyScript.async = true;
+                            document.body.appendChild(credlyScript);
+                        }
+
+                        initScrollObserver();
+                    }
+                };
+
+                const handleToggleTheme = () => {
+                    if (typeof window.toggleTheme === 'function') {
+                        window.toggleTheme();
+                        isDarkMode.value = document.body.classList.contains('dark-mode');
+                    }
+                };
+
+                onMounted(() => {
+                    isDarkMode.value = localStorage.getItem('darkMode') === 'true';
+                    loadData();
+                });
+
+                return {
+                    profile,
+                    badges,
+                    academic,
+                    courses,
+                    isDarkMode,
+                    handleToggleTheme
+                };
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>

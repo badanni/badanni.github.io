@@ -1,0 +1,41 @@
+{
+  "profile": {
+    "name": "Danny Vásconez",
+    "email": "danny@vasconez.work",
+    "linkedin": "https://www.linkedin.com/in/danny-v%C3%A1sconez-3882103a/",
+    "location": "Quito, Ecuador",
+    "bio": "Soy autodidacta y emprendedor por naturaleza. Mi enfoque se dirige hacia el diseño de ingeniería, abarcando tanto el diseño electrónico como la automatización y control, la metrología y la tecnología de la información. Soy altamente responsable, creativo, proactivo y puntual, ya que considero que estas cualidades son fundamentales para el buen desempeño en cualquier tarea. Me encantan los desafíos, ya que creo que fortalecen nuestra capacidad de adaptación y crecimiento en el día a día."
+  },
+  "badges": [
+    "5de3b8ea-ce6b-4553-9ec5-ea6fdbbb8306",
+    "38a6865e-01d0-40bf-a066-af9cd4722f52"
+  ],
+  "academic": [
+    {
+      "logo": "images/logo_espe.webp",
+      "href": "descarga.png",
+      "name": "INGENIERO EN ELECTRONICA, AUTOMATIZACION Y CONTROL",
+      "type": "Bachelor's Degree",
+      "issuer": "ESPE",
+      "label": "INGENIERO EN ELECTRONICA, AUTOMATIZACION Y CONTROL"
+    },
+    {
+      "logo": "images/uisek.jpg",
+      "href": "descarga.png",
+      "name": "MAGISTER EN TECNOLOGIAS DE LA INFORMACION MENCIÓN EN SEGURIDAD DE REDES Y COMUNICACIONES",
+      "type": "Master's Degree",
+      "issuer": "UISEK",
+      "label": "MAGISTER EN TECNOLOGIAS DE LA INFORMACION..."
+    }
+  ],
+  "courses": [
+    {
+      "logo": "images/python_institute.png",
+      "href": "docs/PCEP_Certificado.pdf",
+      "name": "Certified Entry Level Python Programmer",
+      "type": "Certificate",
+      "issuer": "Python Institute",
+      "label": "PCEP"
+    }
+  ]
+}
