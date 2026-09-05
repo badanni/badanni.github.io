@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <div id="app" :class="{ 'dark-theme': isDark }" class="container">
+    <div id="app" class="container">
         
         <!-- Navegación -->
         <nav class="main-menu">
@@ -108,34 +108,44 @@
     </div>
 
     <script>
-        const { createApp } = Vue;
+    const { createApp } = Vue;
 
-        createApp({
-            data() {
-                return {
-                    cv: {},
-                    isDark: false
-                };
-            },
-            mounted() {
-                // Recuperar preferencia de tema
-                this.isDark = localStorage.getItem('theme') === 'dark';
+    createApp({
+        data() {
+            return {
+                cv: {},
+                isDark: false
+            };
+        },
+        mounted() {
+            // 1. Leer preferencia con la misma clave 'darkMode'
+            this.isDark = localStorage.getItem('darkMode') === 'true';
+            this.applyTheme();
 
-                // Cargar datos dinámicos desde data.json
-                fetch('resume.json')
-                    .then(response => response.json())
-                    .then(data => {
-                        this.cv = data;
-                    })
-                    .catch(err => console.error("Error cargando los datos JSON:", err));
+            // Cargar datos del CV
+            fetch('resume.json')
+                .then(response => response.json())
+                .then(data => {
+                    this.cv = data;
+                })
+                .catch(err => console.error("Error cargando JSON:", err));
+        },
+        methods: {
+            toggleTheme() {
+                this.isDark = !this.isDark;
+                localStorage.setItem('darkMode', this.isDark ? 'true' : 'false');
+                this.applyTheme();
             },
-            methods: {
-                toggleTheme() {
-                    this.isDark = !this.isDark;
-                    localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+            applyTheme() {
+                // 2. Aplicar o remover 'dark-mode' en la etiqueta <body>
+                if (this.isDark) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
                 }
             }
-        }).mount('#app');
-    </script>
+        }
+    }).mount('#app');
+</script>
 </body>
 </html>
