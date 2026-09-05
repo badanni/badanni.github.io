@@ -18,6 +18,7 @@
             <div class="nav-links">
                 <a href="index.html" class="active"><i class="bi bi-fingerprint"></i> BIO</a>
                 <a href="resume.html"><i class="bi bi-person-circle"></i> CV</a>
+                <a href="#" id="downloadPdfBtn" class="btn"><i class="bi-file-pdf"></i> Descargar</a>
             </div>
             <button class="theme-toggle" @click="handleToggleTheme">
                 <i :class="isDarkMode ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
@@ -100,6 +101,13 @@
     </div>
 
     <script src="js/base.js"></script>
+    <script type="module">
+        import { downloadResumePDF } from './js/download.js';
+
+        document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+            downloadResumePDF('resume.json');
+        });
+    </script>
     <script>
         const { createApp, ref, onMounted, nextTick } = Vue;
 
