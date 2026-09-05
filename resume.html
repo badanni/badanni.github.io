@@ -18,9 +18,18 @@
         <!-- Navegación -->
         <nav class="main-menu">
             <div class="nav-links">
-                <a href="index.html"><i class="bi bi-fingerprint"></i> BIO</a>
-                <a href="resume.html" class="active"><i class="bi bi-person-circle"></i> CV</a>
-                <a href="#" id="downloadPdfBtn" class="btn"><i class="bi-file-pdf"></i> Descargar</a>
+                <a href="index.html">
+                    <i class="bi bi-fingerprint"></i>
+                    <span class="nav-text"> BIO</span>
+                </a>
+                <a href="resume.html" class="active">
+                    <i class="bi bi-person-circle"></i>
+                    <span class="nav-text"> CV</span>
+                </a>
+                <a href="#" id="downloadPdfBtn" class="btn">
+                    <i class="bi-file-pdf"></i>
+                    <span class="nav-text"> Descargar</span>
+                </a>
             </div>
             <button class="theme-toggle" @click="toggleTheme">
                 <i :class="isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>

@@ -547,3 +547,28 @@ body.dark-mode .cert_img_wrapper {
         color: #000000 !important;
     }
 }
+
+@media (max-width: 768px) {
+    /* Oculta los textos dentro de los enlaces de navegación y botones */
+    .nav-links a .nav-text,
+    .btn .btn-text,
+    .theme-toggle span {
+        display: none !important;
+    }
+
+    /* Ajusta el relleno (padding) para que los botones sean circulares/cuadrados */
+    .main-menu a,
+    .theme-toggle,
+    .btn {
+        padding: 0.5rem 0.75rem;
+        justify-content: center;
+    }
+
+    /* Aumenta ligeramente el tamaño del icono para mejor adaptabilidad táctil */
+    .main-menu a i,
+    .theme-toggle i,
+    .btn i {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+}
