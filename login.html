@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Acceso al sistema">
+    <meta name="author" content="Danny Vásconez">
+    <title>Iniciar Sesión | Danny Vásconez</title>
+    
+    <!-- Iconos y Estilos Generales -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="stylesheets/base.css">
+    
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <style>
+        /* Estilos específicos para la tarjeta de Login */
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 180px);
+            padding: 20px 0;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            border-radius: 12px;
+            background-color: var(--card-bg, #ffffff);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color, #e0e0e0);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-header i {
+            font-size: 2.5rem;
+            color: var(--primary-color, #2563eb);
+        }
+
+        .login-header h2 {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 12px;
+            color: #888;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.65rem 0.75rem 0.65rem 2.4rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color, #ccc);
+            background-color: var(--input-bg, #fff);
+            color: var(--text-primary, #111);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--primary-color, #2563eb);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-error {
+            background-color: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            border: 1px solid #dc2626;
+            padding: 0.65rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+
+        <!-- Menú Flotante Reutilizado -->
+        <nav class="main-menu">
+            <div class="nav-links">
+                <a href="index.html">
+                    <i class="bi bi-fingerprint"></i>
+                    <span class="nav-text"> BIO</span>
+                </a>
+                <a href="resume.html">
+                    <i class="bi bi-person-circle"></i>
+                    <span class="nav-text"> CV</span>
+                </a>
+                <a href="login.html" class="active">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span class="nav-text"> Login</span>
+                </a>
+            </div>
+            <button class="theme-toggle" @click="handleToggleTheme">
+                <i :class="isDarkMode ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
+                <span class="nav-text">{{ isDarkMode ? 'Claro' : 'Oscuro' }}</span>
+            </button>
+        </nav>
+
+        <!-- Formulario de Autenticación -->
+        <div class="login-wrapper">
+            <div class="login-card">
+                
+                <div class="login-header">
+                    <i class="bi bi-shield-lock-fill"></i>
+                    <h2>Acceso Seguro</h2>
+                </div>
+
+                <!-- Mensaje de Error -->
+                <div v-if="errorMessage" class="alert-error">
+                    <i class="bi bi-exclamation-triangle-fill"></i> {{ errorMessage }}
+                </div>
+
+                <form @submit.prevent="handleLogin">
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-envelope"></i>
+                            <input 
+                                id="email" 
+                                type="email" 
+                                v-model="email" 
+                                placeholder="nombre@ejemplo.com"
+                                required 
+                                autocomplete="username"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-key"></i>
+                            <input 
+                                id="password" 
+                                type="password" 
+                                v-model="password" 
+                                placeholder="••••••••"
+                                required 
+                                autocomplete="current-password"
+                            />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-submit" :disabled="loading">
+                        <i v-if="loading" class="bi bi-arrow-repeat spin"></i>
+                        <span>{{ loading ? 'Verificando...' : 'Iniciar Sesión' }}</span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script de la Aplicación -->
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const email = ref('');
+                const password = ref('');
+                const loading = ref(false);
+                const errorMessage = ref('');
+                const isDarkMode = ref(false);
+
+                // --- Control del Modo Oscuro ---
+                const applyTheme = (darkMode) => {
+                    isDarkMode.value = darkMode;
+                    if (darkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    localStorage.setItem('darkMode', darkMode);
+                };
+
+                const handleToggleTheme = () => {
+                    applyTheme(!isDarkMode.value);
+                };
+
+                // --- Petición de Autenticación con Fetch API ---
+                const handleLogin = async () => {
+                    loading.value = true;
+                    errorMessage.value = '';
+
+                    try {
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            // Garantiza el intercambio seguro de cookies HttpOnly
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                email: email.value,
+                                password: password.value
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.message || 'Credenciales incorrectas');
+                        }
+
+                        // Éxito: Redireccionar al panel privado
+                        window.location.href = '/dashboard.html';
+
+                    } catch (error) {
+                        errorMessage.value = error.message;
+                    } finally {
+                        loading.value = false;
+                    }
+                };
+
+                onMounted(() => {
+                    // Cargar preferencia de tema al iniciar
+                    const savedTheme = localStorage.getItem('darkMode');
+                    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    
+                    const initialDarkState = savedTheme !== null ? savedTheme === 'true' : prefersDark;
+                    applyTheme(initialDarkState);
+                });
+
+                return {
+                    email,
+                    password,
+                    loading,
+                    errorMessage,
+                    isDarkMode,
+                    handleToggleTheme,
+                    handleLogin
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
