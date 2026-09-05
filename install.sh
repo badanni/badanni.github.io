@@ -1,0 +1,1 @@
+cp -r ../badanni.github.io/* /var/www/html/danny/badanni.github.io/
