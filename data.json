@@ -13,7 +13,7 @@
   "academic": [
     {
       "logo": "images/logo_espe.webp",
-      "href": "descarga.png",
+      "href": "docs/Titulo_1307941938.pdf",
       "name": "INGENIERO EN ELECTRONICA, AUTOMATIZACION Y CONTROL",
       "type": "Bachelor's Degree",
       "issuer": "ESPE",
@@ -21,7 +21,7 @@
     },
     {
       "logo": "images/uisek.jpg",
-      "href": "descarga.png",
+      "href": "docs/Titulo_1307941938.pdf",
       "name": "MAGISTER EN TECNOLOGIAS DE LA INFORMACION MENCIÓN EN SEGURIDAD DE REDES Y COMUNICACIONES",
       "type": "Master's Degree",
       "issuer": "UISEK",
@@ -36,6 +36,40 @@
       "type": "Certificate",
       "issuer": "Python Institute",
       "label": "PCEP"
+    },
+    {
+      "logo": "images/logo-udla-300x224.png",
+      "href": "docs/Diplomado_en_Gesti_n_de_Riesgos_y_Manejo_de_Crisis_Badge20220224-53-101rm68.pdf",
+      "name": "Diplomado en Gestión de Riesgos y Manejo de Crisis",
+      "type": "Certificate",
+      "issuer": "UDLA",
+      "label": "Riesgo y manejo de crisis"
+    },
+    {
+      "logo": "images/ministerio-trabajo.webp",
+      "href": "descarga.png",
+      "name": "ENTORNO, PLANEAMIENTO, IDENTIFICACIÓN, MEDICIÓN Y EVALUACIÓN DE GESTIÓN DE RIESGOS",
+      "type": "Course",
+      "issuer": "MDT",
+      "label": "Gestión de Riesgo"
+    }
+    ,
+    {
+      "logo": "images/ministerio-trabajo.webp",
+      "href": "descarga.png",
+      "name": "Análisis de riesgos en empresas de alimentos",
+      "type": "Course",
+      "issuer": "MDT",
+      "label": "Gestión de Riesgo Alimentos"
+    }
+    ,
+    {
+      "logo": "images/metrologiafacil.png",
+      "href": "docs/estadistica_aplicada_metrologia.pdf",
+      "name": "Estadistica aplicada a la metrologia",
+      "type": "Course",
+      "issuer": "METROLOGIAFACIL",
+      "label": "Estadistica"
     }
   ]
 }
