@@ -1,0 +1,61 @@
+{
+  "profile": {
+    "name": "Danny Vásconez",
+    "email": "danny@vasconez.work",
+    "linkedin": "https://www.linkedin.com/in/danny-v%C3%A1sconez-3882103a/",
+    "location": "Quito, Ecuador"
+  },
+  "committees": [
+    {
+      "title": "NTE INEN-ISO 19011",
+      "year": "2026",
+      "link": "https://drive.google.com/file/d/1exh5dW2uaZ8WZBwVaxQGt0pfnBU7zC9G/view?usp=sharing"
+    },
+    {
+      "title": "NTE INEN-ISO 5725-4",
+      "year": "2023",
+      "link": "https://drive.google.com/file/d/1g6NPkJ2LOJ-GQMKd4o1TiuXbNj6P5zr4/view?usp=drive_link"
+    },
+    {
+      "title": "NTE INEN-OIML V2-200|JCGM 200",
+      "year": "2022",
+      "link": "https://drive.google.com/file/d/1acnGhuZO5wQoGMkPt_6Y4YlQpNBdq_LA/view?usp=drive_link"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Responsable del Laboratorio de Calibración",
+      "period": "2021 - Actualidad",
+      "company": "Precitrol S.A.",
+      "details": [
+        "Responsable del laboratorio de Calibración en el ámbito de Calidad y técnico a nivel nacional.",
+        "Garantizar la integridad del sistema de gestión en base a NTE INEN/ISO 17025.",
+        "Validación y verificación de los procedimientos de calibración según los alcances del laboratorio.",
+        "Asegurar y mantener la competencia del personal técnico metrólogo del laboratorio.",
+        "Respaldo técnico para el Responsable Técnico del laboratorio de Calibración.",
+        "Gestión, mantenimiento, soporte y actualización de la infraestructura interna del Laboratorio.",
+        "Diseño e implementación de herramientas, software, metodologias para los requerimientos del Laboratorio"
+      ]
+    },
+    {
+      "role": "Técnico y Metrologo",
+      "period": "2020 - 2021",
+      "company": "Precitrol S.A.",
+      "details": [
+        "Validación, verificación de métodos y cálculo de incertidumbres.",
+        "Apoyo al responsable técnico del Laboratorio.",
+        "Calibración de pesas y balanzas.",
+        "Ajuste y mantenimiento de equipos de medición de masas."
+      ]
+    }
+  ],
+  "skills": [
+    "Flask", "Servidores GNU/Linux", "Estadística", "Metrología", "SX-A Schneider Electric",
+    "NFPA-70", "Calidad de Energía", "ISO 17025", "ISO 27001", "Python", "Java", "C#", "PHP", "Instrumentación"
+  ],
+  "languages": [
+    { "name": "Español", "level": "100%" },
+    { "name": "Inglés", "level": "82%" },
+    { "name": "Portugués", "level": "90%" }
+  ]
+}
