@@ -109,7 +109,9 @@
 
     </div>
 
+    <!-- 
     <script src="js/base.js"></script>
+    -->
     <script type="module">
         import { downloadResumePDF } from './js/download.js';
 
@@ -127,6 +129,21 @@
                 const academic = ref([]);
                 const courses = ref([]);
                 const isDarkMode = ref(false);
+
+                // --- Gestión directa del Modo Oscuro ---
+                const applyTheme = (darkMode) => {
+                    isDarkMode.value = darkMode;
+                    if (darkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    localStorage.setItem('darkMode', darkMode);
+                };
+
+                const handleToggleTheme = () => {
+                    applyTheme(!isDarkMode.value);
+                };
 
                 const initScrollObserver = () => {
                     const observer = new IntersectionObserver((entries) => {
@@ -179,15 +196,14 @@
                     }
                 };
 
-                const handleToggleTheme = () => {
-                    if (typeof window.toggleTheme === 'function') {
-                        window.toggleTheme();
-                        isDarkMode.value = document.body.classList.contains('dark-mode');
-                    }
-                };
-
                 onMounted(() => {
-                    isDarkMode.value = localStorage.getItem('darkMode') === 'true';
+                    // Leer preferencia guardada o detectar preferencia del sistema operativo
+                    const savedTheme = localStorage.getItem('darkMode');
+                    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    
+                    const initialDarkState = savedTheme !== null ? savedTheme === 'true' : prefersDark;
+                    applyTheme(initialDarkState);
+
                     loadData();
                 });
 
