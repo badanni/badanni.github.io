@@ -26,6 +26,14 @@
       "type": "Master's Degree",
       "issuer": "UISEK",
       "label": "MAGISTER EN TECNOLOGIAS DE LA INFORMACION..."
+    },
+    {
+      "logo": "images/logo-udla-300x224.png",
+      "href": "docs/Diplomado_en_Gesti_n_de_Riesgos_y_Manejo_de_Crisis_Badge20220224-53-101rm68.pdf",
+      "name": "Diplomado en Gestión de Riesgos y Manejo de Crisis",
+      "type": "Certificate",
+      "issuer": "UDLA",
+      "label": "Riesgo y manejo de crisis"
     }
   ],
   "courses": [
@@ -36,14 +44,6 @@
       "type": "Certificate",
       "issuer": "Python Institute",
       "label": "PCEP"
-    },
-    {
-      "logo": "images/logo-udla-300x224.png",
-      "href": "docs/Diplomado_en_Gesti_n_de_Riesgos_y_Manejo_de_Crisis_Badge20220224-53-101rm68.pdf",
-      "name": "Diplomado en Gestión de Riesgos y Manejo de Crisis",
-      "type": "Certificate",
-      "issuer": "UDLA",
-      "label": "Riesgo y manejo de crisis"
     },
     {
       "logo": "images/ministerio-trabajo.webp",
