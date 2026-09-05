@@ -168,8 +168,28 @@
     }
   ],
   "courses":[
-    {"details":"Estadística aplicada a la metrología, Febrero 2025, 70 horas, MetrologíaFácil, México", "link":"www.google.com"},
-    {"details":"Estadística aplicada a la metrología, Febrero 2025, 70 horas, MetrologíaFácil, México", "link":null}
+    {"details":"Estadística aplicada a la metrología, Febrero 2025, 70 horas, MetrologíaFácil, México", "link":null},
+    {"details":"Ciencia de Datos, Julio 2022, 60 horas, TecdeMonterreyX, Verify Code: 04e1d8135b5a4ab29be203843bd0883d", "link":"https://credentials.edx.org/credentials/04e1d8135b5a4ab29be203843bd0883d/"},
+    {"details":"Gestión de laboratorios, basado en NTE INEN ISO/IEC 17025:2018","link":null},
+    {"details":"Auditoria interna NTE ISO 19011:2018 con enfoque para NTE ISO 17025:2018","link":null},
+    {"details":"Entorno, planeamiento, identificación, medición y evaluación de gestión de riesgo, Noviembre 2021, 56 horas","link":null},
+    {"details":"Diplomado en Gestión de Riesgos y Manejo de Crisis, Febrero 2022, 168 horas, UDLA","link":null},
+    {"details":"Herramientas Estadísticas en el marco ISO/IEC 17025:2017, Octubre 2021, 16 horas, Metas del Ecuador","link":null},
+    {"details":"Resultados confiable en laboratorios de ensayo y calibración, Febrero 2023, 16 horas, SAE","link":null},
+    {"details":"Lean Manufacturing: Herramientas prácticas para mejora de la calidad, 2 horas, Escuela de la calidad","link":null},
+    {"details":"Taller/Teórico práctico para la calibración de termómetros de resistencia de plantino por el método de comparación con generación de constantes de acuerdo a ITS-90, 16 horas, PTB/INEN","link":null},
+    {"details":"Taller/Teórico práctico para la caracterización de medios generadores de temperatura y humedad, 8 horas, PTB/INEN","link":null},
+    {"details":"Riesgos Industria alimenticia – HACCP, 2 horas, Subsecretaria de la calidad e inocuidad","link":null},
+    {"details":"Análisis de riesgo en industrias de alimentos, 2.5 horas, Subsecretaria de la calidad e inocuidad","link":null},
+    {"details":"Uso y diseño de KPI's, 2 horas, Subsecretaria de la calidad e inocuidad","link":null},
+    {"details":"PCEP – Certified Entry-Level Python Programmer, Verify Code: RP3p.hxQ0.RmZz","link":"https://verify.openedg.org/?id=RP3p.hxQ0.RmZz"},
+    {"details":"Licencia eléctrica, Oct-2015 a Oct-2019","link":null},
+    {"details":"Curso Ethical Hacking, Julio 2018, 40 horas","link":null},
+    {"details":"I Curso de linux basico, Agosto 2008, 18 horas","link":null},
+    {"details":"Curso de Matlab, Diciembre 2007, 40 horas","link":null},
+    {"details":"Utilización de la fabricación integrada por computador CIM en la preparación del almacenaje en los procesos de producción, Diciembre 2010, 40 horas","link":null},
+    {"details":"Certificado de suficiencia en el idioma Portugués, Agosto 2013, 300 horas","link":null},
+    {"details":"Certificado de suficiencia en el idioma ingles, Diciembre 2012","link":null}
   ],
   "education": [
     {
