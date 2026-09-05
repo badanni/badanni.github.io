@@ -1,258 +1,310 @@
-/* Reset básico */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* --- Reset & Variables --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 :root {
-    --primary-color: #2d3436;
-    --secondary-color: #0984e3;
-    --text-color: #2d3436;
-    --bg-color: #ffffff;
+    --bg-color: #f8fafc;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(226, 232, 240, 0.8);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --accent-color: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-light: rgba(37, 99, 235, 0.1);
+    --nav-bg: rgba(255, 255, 255, 0.75);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.04);
 }
 
 body.dark-mode {
-    --primary-color: #f5f6fa;
-    --secondary-color: #74b9ff;
-    --text-color: #f5f6fa;
-    --bg-color: #2d3436;
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --card-border: rgba(51, 65, 85, 0.6);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --accent-color: #38bdf8;
+    --accent-hover: #0284c7;
+    --accent-light: rgba(56, 189, 248, 0.12);
+    --nav-bg: rgba(15, 23, 42, 0.8);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
 body {
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--text-primary);
     line-height: 1.6;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 2rem;
-    margin-top: 70px;
+    padding: 2rem 1.5rem;
+    margin-top: 80px;
 }
 
+/* --- Menú Flotante Moderno --- */
+.main-menu {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 700px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.6rem 1.2rem;
+    z-index: 1000;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.main-menu a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.main-menu a:hover,
+.main-menu a.active {
+    color: var(--accent-color);
+    background: var(--accent-light);
+}
+
+.theme-toggle {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.theme-toggle:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* --- Encabezado --- */
 header {
     text-align: center;
-    margin-bottom: 3rem;
-    padding: 2rem 0;
-    border-bottom: 2px solid var(--secondary-color);
+    margin-bottom: 2.5rem;
+    padding: 2.5rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-sm);
 }
 
 .name {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--secondary-color);
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
 }
 
 .contact-info {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
+.contact-info span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent-light);
+    padding: 0.4rem 0.9rem;
+    border-radius: 12px;
+}
+
+.contact-info a {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* --- Secciones & Tarjetas --- */
 .section {
     margin: 2rem 0;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-sm);
 }
 
 h2 {
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
-    position: relative;
-    padding-left: 1rem;
+    color: var(--text-primary);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
 h2::before {
     content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 80%;
-    background: var(--secondary-color);
+    display: inline-block;
+    width: 6px;
+    height: 1.25rem;
+    background: var(--accent-color);
+    border-radius: 4px;
 }
 
-.experience-item, .education-item {
-    margin-bottom: 1.5rem;
+.experience-item {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--card-border);
+}
+
+.experience-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.experience-item h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .date {
-    color: #636e72;
-    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0.2rem 0 0.5rem 0;
 }
 
+.experience-item ul {
+    list-style: none;
+    margin-top: 0.75rem;
+}
+
+.experience-item li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.experience-item li::before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+/* Enlaces de descarga / respaldos */
+a i.bi-file-earmark-arrow-down {
+    color: var(--accent-color);
+    background: var(--accent-light);
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    margin-left: 0.4rem;
+    transition: all 0.2s ease;
+}
+
+a i.bi-file-earmark-arrow-down:hover {
+    transform: translateY(-2px);
+}
+
+/* --- Habilidades (Tags) --- */
 .skills {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
 }
 
 .skill-tag {
-    background: var(--secondary-color);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 0.9rem;
+    background: var(--accent-light);
+    color: var(--accent-color);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    padding: 0.4rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-.theme-toggle {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    background: var(--secondary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
+.skill-tag:hover {
+    transform: translateY(-2px);
 }
 
+/* --- Barras de Idiomas --- */
 .language-bars {
     display: grid;
-    gap: 1.2rem;
+    gap: 1.25rem;
 }
 
 .language-item {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 120px 1fr;
     align-items: center;
     gap: 1rem;
+    font-weight: 600;
 }
 
 .bar-container {
-    height: 8px;
-    background: rgba(0,0,0,0.1);
-    border-radius: 4px;
+    height: 10px;
+    background: var(--accent-light);
+    border-radius: 999px;
     overflow: hidden;
-    position: relative;
 }
 
 .bar-fill {
     height: 100%;
-    background: var(--secondary-color);
-    width: 0;
-    border-radius: 4px;
-    transition: width 1s ease-in-out;
-}
-
-.bar-fill::after {
-    content: attr(data-level);
-    position: absolute;
-    right: 5px;
-    top: -20px;
-    font-size: 0.8rem;
-    color: var(--text-color);
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-}
-
-a:hover,
-a:focus {
-    opacity: 0.8;
-    text-decoration: none;
-}
-
-a:active {
-    opacity: 0.6;
-}
-
-body.dark-mode a {
-    color: var(--text-color);
-}
-
-.plain-link {
-    cursor: text !important;
-    pointer-events: none !important;
-}
-
-.main-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: var(--bg-color);
-    padding: 1rem 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.main-menu a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    position: relative;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-}
-
-.main-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--secondary-color);
-    transition: width 0.3s ease;
-}
-
-.main-menu a:hover::after {
-    width: 100%;
-}
-
-@media print {
-    .theme-toggle,
-    .main-menu {
-        display: none !important;
-    }
-    
-    body {
-        background: white;
-        color: black;
-    }
-
-    .container {
-        margin-top: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem;
-        margin-top: 60px;
-    }
-    
-    .name {
-        font-size: 2rem;
-    }
-
-    .main-menu {
-        gap: 1.5rem;
-        padding: 0.8rem 0;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .language-item {
-        grid-template-columns: 1fr;
-    }
+    background: var(--accent-color);
+    border-radius: 999px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- Badges / Insignias Grid Estilo Credly --- */
@@ -265,29 +317,24 @@ body.dark-mode a {
 }
 
 .cert_badge {
-    background-color: var(--bg-color);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-sm);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
 }
 
-body.dark-mode .cert_badge {
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
 .cert_badge:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-md);
 }
 
-.cert_card {
+.cert_card,
+.cert_body {
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -297,15 +344,7 @@ body.dark-mode .cert_badge {
     height: 100%;
 }
 
-.cert_body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-/* Marco superior para la insignia/logo */
+/* Marco superior para el logo/imagen con alto fijo */
 .cert_img_wrapper {
     width: 100%;
     height: 130px;
@@ -314,15 +353,14 @@ body.dark-mode .cert_badge {
     justify-content: center;
     padding: 1rem;
     background: rgba(0, 0, 0, 0.02);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--card-border);
 }
 
 body.dark-mode .cert_img_wrapper {
     background: rgba(255, 255, 255, 0.03);
-    border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Escala natural y fluida de la imagen */
+/* Regla estricta para garantizar la escala fluida de la imagen */
 .cert_badge img,
 .cert_img {
     max-width: 100% !important;
@@ -334,6 +372,7 @@ body.dark-mode .cert_img_wrapper {
     margin: 0 auto !important;
 }
 
+/* Contenedor inferior de información */
 .cert_container {
     display: flex;
     flex-direction: column;
@@ -348,7 +387,7 @@ body.dark-mode .cert_img_wrapper {
     font-size: 0.85rem;
     font-weight: 700;
     line-height: 1.3;
-    color: var(--text-color);
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -361,16 +400,12 @@ body.dark-mode .cert_img_wrapper {
 
 .cert_issuer {
     font-size: 0.73rem;
-    color: #636e72;
+    color: var(--text-muted);
     margin-bottom: 0.75rem;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-body.dark-mode .cert_issuer {
-    color: #b2bec3;
 }
 
 .cert_type {
@@ -379,7 +414,7 @@ body.dark-mode .cert_issuer {
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    background: var(--secondary-color);
+    background: var(--accent-color);
     color: #ffffff;
     padding: 0.3rem 0.75rem;
     border-radius: 20px;
@@ -387,4 +422,128 @@ body.dark-mode .cert_issuer {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        margin-top: 75px;
+    }
+
+    .main-menu {
+        width: calc(100% - 1.5rem);
+        padding: 0.5rem 0.8rem;
+    }
+
+    .main-menu a {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+    }
+
+    .name {
+        font-size: 1.75rem;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .language-item {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+    }
+}
+/* ==========================================
+   ESTILOS DE IMPRESIÓN (CV TRADICIONAL)
+   ========================================== */
+@media print {
+    /* 1. Reset general del documento */
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-family: 'Arial', 'Helvetica', sans-serif !important;
+        font-size: 11pt !important;
+        line-height: 1.4 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 2. Ocultar elementos de UI interactivos o innecesarios */
+    nav,
+    header,
+    footer,
+    .theme-toggle,
+    .btn,
+    .buttons-container,
+    .no-print {
+        display: none !important;
+    }
+
+    /* 3. Ajustar contenedores a ancho completo de página */
+    .container,
+    main,
+    section {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* 4. Transformación de los badges/certificados a formato texto limpio */
+    .badges-grid {
+        display: block !important;
+    }
+
+    .cert_badge {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        page-break-inside: avoid;
+        margin-bottom: 0.8rem !important;
+        padding: 0 !important;
+    }
+
+    .cert_img_wrapper,
+    .cert_type {
+        display: none !important; /* Oculta la tarjeta/imagen para ahorrar espacio */
+    }
+
+    .cert_container {
+        padding: 0 !important;
+        text-align: left !important;
+        align-items: flex-start !important;
+    }
+
+    .cert_name {
+        font-size: 10pt !important;
+        font-weight: bold !important;
+        color: #000000 !important;
+        margin-bottom: 2px !important;
+    }
+
+    .cert_issuer {
+        font-size: 9pt !important;
+        color: #444444 !important;
+    }
+
+    /* 5. Optimización de saltos de página */
+    h1, h2, h3 {
+        color: #000000 !important;
+        page-break-after: avoid;
+    }
+
+    section, article, .cv-item {
+        page-break-inside: avoid;
+    }
+
+    /* 6. Formato de enlaces */
+    a {
+        text-decoration: none !important;
+        color: #000000 !important;
+    }
 }
