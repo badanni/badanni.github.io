@@ -20,7 +20,7 @@
             <div class="nav-links">
                 <a href="index.html">
                     <i class="bi bi-fingerprint"></i>
-                    <span class="nav-text"> BIO</span>
+                    <span class="nav-text"> BIO2</span>
                 </a>
                 <a href="resume.html" class="active">
                     <i class="bi bi-person-circle"></i>
@@ -146,7 +146,8 @@
             this.applyTheme();
 
             // Cargar datos del CV
-            fetch('resume.json')
+            //resume.json
+            fetch('http://localhost:3350/api/resume')
                 .then(response => response.json())
                 .then(data => {
                     this.cv = data;
