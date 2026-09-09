@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Editar contenido de la biografía">
+    <title>Editar | Danny Vásconez</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        .edit-input, .edit-textarea {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .edit-input:focus, .edit-textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .badge-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add {
+            background: var(--accent-light);
+            color: var(--accent-color);
+            margin-top: 0.8rem;
+        }
+
+        .btn-add:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .btn-delete:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-save {
+            background: #10b981;
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-save:hover {
+            background: #059669;
+        }
+
+        .card-edit-item {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-edit-item .btn-delete {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background: #10b981;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notification.error {
+            background: #ef4444;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+
+        <!-- Menú Flotante -->
+        <nav class="main-menu">
+            <div class="nav-links">
+                <a href="index.html">
+                    <i class="bi bi-arrow-left-circle"></i>
+                    <span class="nav-text"> BIO</span>
+                </a>
+                <button class="btn-action btn-save" @click="saveData" :disabled="isSaving || isLoading">
+                    <i class="bi" :class="isSaving ? 'bi-hourglass-split' : 'bi-floppy-fill'"></i>
+                    <span class="nav-text">{{ isSaving ? 'Guardando...' : 'Guardar Cambios' }}</span>
+                </button>
+            </div>
+            <button class="theme-toggle" @click="handleToggleTheme">
+                <i :class="isDarkMode ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
+                <span class="nav-text">{{ isDarkMode ? 'Claro' : 'Oscuro' }}</span>
+            </button>
+        </nav>
+
+        <!-- Indicador de Carga Inicial -->
+        <div v-if="isLoading" class="loading-state">
+            <i class="bi bi-arrow-repeat" style="font-size: 2rem; display: inline-block; animation: spin 1s linear infinite;"></i>
+            <p>Cargando información...</p>
+        </div>
+
+        <template v-else>
+            <!-- Header / Perfil -->
+            <header>
+                <h2><i class="bi bi-person-lines-fill"></i> Datos Personales</h2>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>Nombre Completo</label>
+                    <input type="text" v-model="profile.name" class="edit-input" placeholder="Tu Nombre">
+                </div>
+                <div class="grid-2-col">
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" v-model="profile.email" class="edit-input" placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Enlace de LinkedIn</label>
+                        <input type="url" v-model="profile.linkedin" class="edit-input" placeholder="https://linkedin.com/in/...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ubicación</label>
+                    <input type="text" v-model="profile.location" class="edit-input" placeholder="Ciudad, País">
+                </div>
+            </header>
+
+            <!-- Quien soy -->
+            <section class="section">
+                <h2>Quién soy</h2>
+                <div class="form-group">
+                    <label>Biografía / Descripción General</label>
+                    <textarea v-model="profile.bio" class="edit-textarea" rows="4" placeholder="Escribe tu biografía..."></textarea>
+                </div>
+            </section>
+
+            <!-- Badges Credly -->
+            <section class="section">
+                <h2>Badges (IDs de Credly)</h2>
+                <div v-for="(badge, index) in badges" :key="index" class="badge-input-group">
+                    <input type="text" v-model="badges[index]" class="edit-input" placeholder="ID de la insignia">
+                    <button type="button" class="btn-action btn-delete" @click="removeBadge(index)">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>
+                <button type="button" class="btn-action btn-add" @click="addBadge">
+                    <i class="bi bi-plus-circle-fill"></i> Agregar Badge
+                </button>
+            </section>
+
+            <!-- Academia -->
+            <section class="section">
+                <h2>Academia</h2>
+                <div v-for="(item, index) in academic" :key="index" class="card-edit-item">
+                    <button type="button" class="btn-action btn-delete" @click="removeAcademic(index)">
+                        <i class="bi bi-trash-fill"></i> Borrar
+                    </button>
+                    <div class="grid-2-col">
+                        <div class="form-group">
+                            <label>Título / Carrera</label>
+                            <input type="text" v-model="item.name" class="edit-input" placeholder="Nombre de la titulación">
+                        </div>
+                        <div class="form-group">
+                            <label>Institución / Emisor</label>
+                            <input type="text" v-model="item.issuer" class="edit-input" placeholder="Universidad / Instituto">
+                        </div>
+                    </div>
+                    <div class="grid-2-col">
+                        <div class="form-group">
+                            <label>URL del Logo (Imagen)</label>
+                            <input type="text" v-model="item.logo" class="edit-input" placeholder="assets/img/logo.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo / Grado</label>
+                            <input type="text" v-model="item.type" class="edit-input" placeholder="Licenciatura, Máster, etc.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Enlace Externo (Opcional)</label>
+                        <input type="url" v-model="item.href" class="edit-input" placeholder="https://...">
+                    </div>
+                </div>
+                <button type="button" class="btn-action btn-add" @click="addAcademic">
+                    <i class="bi bi-plus-circle-fill"></i> Agregar Titulación
+                </button>
+            </section>
+
+            <!-- Cursos -->
+            <section class="section">
+                <h2>Cursos y Certificaciones</h2>
+                <div v-for="(course, index) in courses" :key="index" class="card-edit-item">
+                    <button type="button" class="btn-action btn-delete" @click="removeCourse(index)">
+                        <i class="bi bi-trash-fill"></i> Borrar
+                    </button>
+                    <div class="grid-2-col">
+                        <div class="form-group">
+                            <label>Nombre del Curso</label>
+                            <input type="text" v-model="course.name" class="edit-input" placeholder="Nombre del curso">
+                        </div>
+                        <div class="form-group">
+                            <label>Emisor / Plataforma</label>
+                            <input type="text" v-model="course.issuer" class="edit-input" placeholder="Udemy, Coursera, etc.">
+                        </div>
+                    </div>
+                    <div class="grid-2-col">
+                        <div class="form-group">
+                            <label>URL del Logo</label>
+                            <input type="text" v-model="course.logo" class="edit-input" placeholder="assets/img/course.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo / Categoría</label>
+                            <input type="text" v-model="course.type" class="edit-input" placeholder="Certificado, Taller, etc.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Enlace al Certificado (Opcional)</label>
+                        <input type="url" v-model="course.href" class="edit-input" placeholder="https://...">
+                    </div>
+                </div>
+                <button type="button" class="btn-action btn-add" @click="addCourse">
+                    <i class="bi bi-plus-circle-fill"></i> Agregar Curso
+                </button>
+            </section>
+        </template>
+
+        <!-- Notificación emergente -->
+        <div v-if="toast.show" class="notification" :class="{ error: toast.isError }">
+            <i class="bi" :class="toast.isError ? 'bi-exclamation-triangle-fill' : 'bi-check-circle-fill'"></i>
+            {{ toast.message }}
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const API_GET_URL = 'https://api.vasconez.work/bio';
+                const API_SAVE_URL = 'https://api.vasconez.work/bio';
+
+                // Garantizamos la estructura por defecto para evitar errores
+                const profile = ref({ name: '', email: '', linkedin: '', location: '', bio: '' });
+                const badges = ref([]);
+                const academic = ref([]);
+                const courses = ref([]);
+                
+                const isDarkMode = ref(false);
+                const isLoading = ref(true);
+                const isSaving = ref(false);
+                const toast = ref({ show: false, message: '', isError: false });
+
+                const showToast = (message, isError = false) => {
+                    toast.value = { show: true, message, isError };
+                    setTimeout(() => { toast.value.show = false; }, 3000);
+                };
+
+                const applyTheme = (darkMode) => {
+                    isDarkMode.value = darkMode;
+                    document.body.classList.toggle('dark-mode', darkMode);
+                    localStorage.setItem('darkMode', darkMode);
+                };
+
+                const handleToggleTheme = () => {
+                    applyTheme(!isDarkMode.value);
+                };
+
+                const loadData = async () => {
+                    try {
+                        isLoading.value = true;
+                        const response = await fetch(API_GET_URL);
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        let data = await response.json();
+                        
+                        if (data._default) {
+                            const keys = Object.keys(data._default);
+                            if (keys.length > 0) {
+                                const firstRecord = data._default[keys[0]];
+                                data = (firstRecord && firstRecord.profile) ? firstRecord : data._default;
+                            }
+                        }
+
+                        if (data.profile) Object.assign(profile.value, data.profile);
+                        badges.value = Array.isArray(data.badges) ? data.badges : [];
+                        academic.value = Array.isArray(data.academic) ? data.academic : [];
+                        courses.value = Array.isArray(data.courses) ? data.courses : [];
+
+                    } catch (error) {
+                        console.error("Error al cargar datos:", error);
+                        showToast("Error al obtener datos, puedes ingresar manualmente", true);
+                    } finally {
+                        isLoading.value = false;
+                    }
+                };
+
+                const addBadge = () => badges.value.push('');
+                const removeBadge = (index) => badges.value.splice(index, 1);
+
+                const addAcademic = () => {
+                    academic.value.push({ name: '', issuer: '', logo: '', type: '', href: '' });
+                };
+                const removeAcademic = (index) => academic.value.splice(index, 1);
+
+                const addCourse = () => {
+                    courses.value.push({ name: '', issuer: '', logo: '', type: '', href: '' });
+                };
+                const removeCourse = (index) => courses.value.splice(index, 1);
+
+                const saveData = async () => {
+                    isSaving.value = true;
+
+                    const payload = {
+                        profile: profile.value,
+                        badges: badges.value.filter(id => id && id.trim() !== ''),
+                        academic: academic.value,
+                        courses: courses.value
+                    };
+
+                    try {
+                        const response = await fetch(API_SAVE_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) throw new Error(`Error ${response.status}`);
+
+                        showToast("¡Información guardada con éxito!");
+                    } catch (error) {
+                        console.error("Error al guardar:", error);
+                        showToast("Ocurrió un error al guardar en el servidor", true);
+                    } finally {
+                        isSaving.value = false;
+                    }
+                };
+
+                onMounted(() => {
+                    const savedTheme = localStorage.getItem('darkMode');
+                    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    applyTheme(savedTheme !== null ? savedTheme === 'true' : prefersDark);
+
+                    loadData();
+                });
+
+                return {
+                    profile,
+                    badges,
+                    academic,
+                    courses,
+                    isDarkMode,
+                    isLoading,
+                    isSaving,
+                    toast,
+                    handleToggleTheme,
+                    addBadge,
+                    removeBadge,
+                    addAcademic,
+                    removeAcademic,
+                    addCourse,
+                    removeCourse,
+                    saveData
+                };
+            }
+        }).mount('#app');
+    </script>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>
