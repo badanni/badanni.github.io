@@ -169,7 +169,7 @@
 
                 const loadData = async () => {
                     try {
-                        const response = await fetch('./data.json');
+                        const response = await fetch('https://api.vasconez.work/bio');
                         if (!response.ok) throw new Error(`HTTP ${response.status}`);
                         let data = await response.json();
                         
