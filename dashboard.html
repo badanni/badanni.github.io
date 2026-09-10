@@ -132,11 +132,13 @@
             border: 1px solid var(--card-border);
             border-radius: 16px;
             padding: 1.2rem;
+            padding-top: 2.5rem; /* Margen superior para evitar solapamiento */
             margin-bottom: 1rem;
             box-shadow: var(--shadow-sm);
         }
 
-        .card-edit-item .btn-delete {
+        /* Corrección de especificidad para el botón de eliminar de la tarjeta principal */
+        .card-edit-item > .btn-delete {
             position: absolute;
             top: 1rem;
             right: 1rem;
@@ -166,6 +168,7 @@
             align-items: center;
             gap: 0.4rem;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .btn-add {
@@ -182,6 +185,7 @@
         .btn-delete {
             background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
+            position: static; /* Asegura posición relativa por defecto */
         }
 
         .btn-delete:hover {
@@ -722,7 +726,7 @@
                 const courses = ref([]);
                 const serverImages = ref([]);
 
-                // Estrutura Completa de Resume
+                // Estructura Completa de Resume
                 const resume = ref({
                     profile: { name: '', email: '', linkedin: '', location: '' },
                     committees: [],
