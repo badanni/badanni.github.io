@@ -145,13 +145,18 @@
 <body>
     <div id="app" class="container">
 
-        <!-- Datalist Compartido Unificado para Tipos/Grados y Emisores -->
+        <!-- Datalist Compartido para Tipos, Emisores e Imágenes -->
         <datalist id="shared-types-list">
             <option v-for="(type, idx) in sharedTypes" :key="idx" :value="type"></option>
         </datalist>
 
         <datalist id="shared-issuers-list">
             <option v-for="(issuer, idx) in sharedIssuers" :key="idx" :value="issuer"></option>
+        </datalist>
+
+        <!-- Datalist dinámico de imágenes de la carpeta /images -->
+        <datalist id="images-list">
+            <option v-for="(img, idx) in availableImages" :key="idx" :value="img"></option>
         </datalist>
 
         <!-- Menú Flotante -->
@@ -245,11 +250,11 @@
                     <div class="grid-2-col">
                         <div class="form-group">
                             <label>URL del Logo (Imagen)</label>
-                            <input type="text" v-model="item.logo" class="edit-input" placeholder="assets/img/logo.png">
+                            <!-- Vinculado a list="images-list" -->
+                            <input type="text" v-model="item.logo" list="images-list" class="edit-input" placeholder="images/logo.png">
                         </div>
                         <div class="form-group">
                             <label>Tipo / Grado</label>
-                            <!-- Apunta al datalist compartido -->
                             <input type="text" v-model="item.type" list="shared-types-list" class="edit-input" placeholder="Selecciona o escribe un grado...">
                         </div>
                     </div>
@@ -283,11 +288,11 @@
                     <div class="grid-2-col">
                         <div class="form-group">
                             <label>URL del Logo</label>
-                            <input type="text" v-model="course.logo" class="edit-input" placeholder="assets/img/course.png">
+                            <!-- Vinculado a list="images-list" -->
+                            <input type="text" v-model="course.logo" list="images-list" class="edit-input" placeholder="images/course.png">
                         </div>
                         <div class="form-group">
                             <label>Tipo / Categoría</label>
-                            <!-- Apunta al mismo datalist compartido -->
                             <input type="text" v-model="course.type" list="shared-types-list" class="edit-input" placeholder="Selecciona o escribe un tipo...">
                         </div>
                     </div>
@@ -317,32 +322,42 @@
             setup() {
                 const API_GET_URL = 'https://api.vasconez.work/bio';
                 const API_SAVE_URL = 'https://api.vasconez.work/bio';
+                // Endpoint para obtener la lista de archivos de la carpeta /images en el servidor
+                const API_IMAGES_URL = 'https://api.vasconez.work/images';
 
                 const profile = ref({ name: '', email: '', linkedin: '', location: '', bio: '' });
                 const badges = ref([]);
                 const academic = ref([]);
                 const courses = ref([]);
+                const serverImages = ref([]);
                 
                 const isDarkMode = ref(false);
                 const isLoading = ref(true);
                 const isSaving = ref(false);
                 const toast = ref({ show: false, message: '', isError: false });
 
+                // --- Datalist de Imágenes ---
+                const availableImages = computed(() => {
+                    // Extrae también las imágenes usadas en los registros actuales
+                    const academicLogos = academic.value.map(i => i.logo ? i.logo.trim() : '');
+                    const courseLogos = courses.value.map(c => c.logo ? c.logo.trim() : '');
+                    
+                    const allImages = [...serverImages.value, ...academicLogos, ...courseLogos].filter(img => img !== '');
+                    return [...new Set(allImages)];
+                });
+
                 // --- Datalist Compartido de Tipos / Grados ---
                 const sharedTypes = computed(() => {
                     const academicTypes = academic.value.map(item => item.type ? item.type.trim() : '');
                     const courseTypes = courses.value.map(item => item.type ? item.type.trim() : '');
-                    
-                    // Une ambas listas, elimina vacíos y elimina duplicados
                     const allTypes = [...academicTypes, ...courseTypes].filter(t => t !== '');
                     return [...new Set(allTypes)];
                 });
 
-                // --- Datalist Compartido de Emisores / Instituciones ---
+                // --- Datalist Compartido de Emisores ---
                 const sharedIssuers = computed(() => {
                     const academicIssuers = academic.value.map(item => item.issuer ? item.issuer.trim() : '');
                     const courseIssuers = courses.value.map(item => item.issuer ? item.issuer.trim() : '');
-                    
                     const allIssuers = [...academicIssuers, ...courseIssuers].filter(i => i !== '');
                     return [...new Set(allIssuers)];
                 });
@@ -362,9 +377,29 @@
                     applyTheme(!isDarkMode.value);
                 };
 
+                // Cargar lista de imágenes del servidor
+                const loadImages = async () => {
+                    try {
+                        const res = await fetch(API_IMAGES_URL);
+                        if (res.ok) {
+                            const files = await res.json();
+                            if (Array.isArray(files)) {
+                                // Mapea los nombres de archivo agregándoles el prefijo images/
+                                serverImages.value = files.map(file => file.startsWith('images/') ? file : `images/${file}`);
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("No se pudo cargar la lista remota de imágenes:", e);
+                    }
+                };
+
                 const loadData = async () => {
                     try {
                         isLoading.value = true;
+                        
+                        // Intentamos cargar las imágenes en paralelo
+                        loadImages();
+
                         const response = await fetch(API_GET_URL);
                         if (!response.ok) throw new Error(`HTTP ${response.status}`);
                         let data = await response.json();
@@ -446,6 +481,7 @@
                     badges,
                     academic,
                     courses,
+                    availableImages,
                     sharedTypes,
                     sharedIssuers,
                     isDarkMode,
