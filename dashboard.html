@@ -112,6 +112,12 @@
             gap: 1rem;
         }
 
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
         .badge-input-group {
             display: flex;
             gap: 0.5rem;
@@ -134,6 +140,18 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
+        }
+
+        .nested-box {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px dashed var(--card-border);
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .dark-mode .nested-box {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         /* Botones de Acción */
@@ -464,51 +482,206 @@
 
             <!-- PESTAÑA 2: EDITAR RESUME (CV) -->
             <div v-if="activeTab === 'resume'">
+                
+                <!-- Perfil CV -->
+                <section class="section">
+                    <h2><i class="bi bi-person-badge"></i> Perfil CV</h2>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>Nombre Completo</label>
+                        <input type="text" v-model="resume.profile.name" class="edit-input" placeholder="Nombre">
+                    </div>
+                    <div class="grid-3-col">
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" v-model="resume.profile.email" class="edit-input" placeholder="correo@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn</label>
+                            <input type="url" v-model="resume.profile.linkedin" class="edit-input" placeholder="https://linkedin.com/in/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Ubicación</label>
+                            <input type="text" v-model="resume.profile.location" class="edit-input" placeholder="Ciudad, País">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Comités Técnicos ISO/INEN -->
+                <section class="section">
+                    <h2>Comités Técnicos ISO/INEN</h2>
+                    <div v-for="(item, index) in resume.committees" :key="index" class="card-edit-item">
+                        <button type="button" class="btn-action btn-delete" @click="removeCommittee(index)">
+                            <i class="bi bi-trash-fill"></i> Borrar
+                        </button>
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label>Título del Comité</label>
+                                <input type="text" v-model="item.title" class="edit-input" placeholder="Nombre o cargo en el comité">
+                            </div>
+                            <div class="form-group">
+                                <label>Año / Período</label>
+                                <input type="text" v-model="item.year" class="edit-input" placeholder="Ej: 2023">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Enlace del Documento de Respaldo</label>
+                            <input type="url" v-model="item.link" class="edit-input" placeholder="https://...">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-action btn-add" @click="addCommittee">
+                        <i class="bi bi-plus-circle-fill"></i> Agregar Comité
+                    </button>
+                </section>
+
+                <!-- Experiencia Laboral -->
                 <section class="section">
                     <h2>Experiencia Laboral</h2>
-                    
-                    <div v-for="(exp, index) in resume.experiences" :key="index" class="card-edit-item">
+                    <div v-for="(exp, index) in resume.experience" :key="index" class="card-edit-item">
                         <button type="button" class="btn-action btn-delete" @click="removeExperience(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
-                        
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label>Cargo / Rol</label>
-                                <input type="text" class="edit-input" v-model="exp.role" required placeholder="Ej: Full Stack Developer" />
+                                <input type="text" class="edit-input" v-model="exp.role" placeholder="Ej: Full Stack Developer" />
                             </div>
                             <div class="form-group">
                                 <label>Empresa</label>
-                                <input type="text" class="edit-input" v-model="exp.company" required placeholder="Nombre de la empresa" />
+                                <input type="text" class="edit-input" v-model="exp.company" placeholder="Nombre de la empresa" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Período</label>
                             <input type="text" class="edit-input" v-model="exp.period" placeholder="Ej: 2021 - Presente" />
                         </div>
-                        <div class="form-group">
-                            <label>Logros y Responsabilidades (un punto por línea)</label>
-                            <textarea class="edit-textarea" v-model="exp.details" rows="3"></textarea>
+                        
+                        <!-- Lista de Detalles/Logros -->
+                        <div class="nested-box">
+                            <label style="font-weight: 600; font-size: 0.85rem;">Detalles / Funciones</label>
+                            <div v-for="(detail, dIdx) in exp.details" :key="dIdx" class="badge-input-group" style="margin-top: 0.5rem;">
+                                <input type="text" v-model="detail.text" class="edit-input" placeholder="Descripción de la función">
+                                <input type="url" v-model="detail.link" class="edit-input" style="max-width: 200px;" placeholder="URL Respaldo (opcional)">
+                                <button type="button" class="btn-action btn-delete" @click="removeExperienceDetail(index, dIdx)">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                            <button type="button" class="btn-action btn-add" @click="addExperienceDetail(index)">
+                                <i class="bi bi-plus-circle-fill"></i> Agregar Función
+                            </button>
                         </div>
                     </div>
-
                     <button type="button" class="btn-action btn-add" @click="addExperience">
                         <i class="bi bi-plus-circle-fill"></i> Agregar Experiencia
                     </button>
+                </section>
 
-                    <h2 style="margin-top: 2.5rem;">Habilidades Tecnológicas</h2>
-                    <div class="form-group">
-                        <label>Habilidades (separadas por comas)</label>
-                        <input type="text" class="edit-input" v-model="resume.skills" placeholder="Ej: Vue.js, Node.js, Python, Docker, PostgreSQL" />
+                <!-- Educación -->
+                <section class="section">
+                    <h2>Educación</h2>
+                    <div v-for="(edu, index) in resume.education" :key="index" class="card-edit-item">
+                        <button type="button" class="btn-action btn-delete" @click="removeEducation(index)">
+                            <i class="bi bi-trash-fill"></i> Borrar
+                        </button>
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label>Título / Titulación</label>
+                                <input type="text" class="edit-input" v-model="edu.name" placeholder="Ej: Ingeniería en Sistemas" />
+                            </div>
+                            <div class="form-group">
+                                <label>Universidad / Institución</label>
+                                <input type="text" class="edit-input" v-model="edu.university" placeholder="Nombre de la institución" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Período</label>
+                            <input type="text" class="edit-input" v-model="edu.period" placeholder="Ej: 2015 - 2020" />
+                        </div>
+
+                        <!-- Detalles Educación -->
+                        <div class="nested-box">
+                            <label style="font-weight: 600; font-size: 0.85rem;">Detalles Adicionales</label>
+                            <div v-for="(detail, dIdx) in edu.details" :key="dIdx" class="badge-input-group" style="margin-top: 0.5rem;">
+                                <input type="text" v-model="edu.details[dIdx]" class="edit-input" placeholder="Detalle o logro">
+                                <button type="button" class="btn-action btn-delete" @click="removeEducationDetail(index, dIdx)">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                            <button type="button" class="btn-action btn-add" @click="addEducationDetail(index)">
+                                <i class="bi bi-plus-circle-fill"></i> Agregar Detalle
+                            </button>
+                        </div>
                     </div>
+                    <button type="button" class="btn-action btn-add" @click="addEducation">
+                        <i class="bi bi-plus-circle-fill"></i> Agregar Educación
+                    </button>
+                </section>
 
-                    <div class="actions-bar">
-                        <button type="button" class="btn btn-primary" @click="saveResumeData" :disabled="isSaving">
-                            <i class="bi" :class="isSaving ? 'bi-arrow-repeat spinner' : 'bi-floppy-fill'" style="font-size: 1rem;"></i>
-                            <span>{{ isSaving ? 'Guardando Resume...' : 'Guardar CV' }}</span>
+                <!-- Cursos y Certificados CV -->
+                <section class="section">
+                    <h2>Cursos y Certificados (CV)</h2>
+                    <div v-for="(item, index) in resume.courses" :key="index" class="card-edit-item">
+                        <button type="button" class="btn-action btn-delete" @click="removeResumeCourse(index)">
+                            <i class="bi bi-trash-fill"></i> Borrar
+                        </button>
+                        <div class="form-group">
+                            <label>Descripción del Curso / Certificado</label>
+                            <input type="text" class="edit-input" v-model="item.details" placeholder="Ej: Certificación AWS Cloud Practitioner" />
+                        </div>
+                        <div class="form-group">
+                            <label>Enlace al Certificado (Opcional)</label>
+                            <input type="url" class="edit-input" v-model="item.link" placeholder="https://..." />
+                        </div>
+                    </div>
+                    <button type="button" class="btn-action btn-add" @click="addResumeCourse">
+                        <i class="bi bi-plus-circle-fill"></i> Agregar Curso
+                    </button>
+                </section>
+
+                <!-- Habilidades -->
+                <section class="section">
+                    <h2>Habilidades</h2>
+                    <div v-for="(skill, index) in resume.skills" :key="index" class="badge-input-group">
+                        <input type="text" v-model="resume.skills[index]" class="edit-input" placeholder="Ej: JavaScript / Docker">
+                        <button type="button" class="btn-action btn-delete" @click="removeSkill(index)">
+                            <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>
+                    <button type="button" class="btn-action btn-add" @click="addSkill">
+                        <i class="bi bi-plus-circle-fill"></i> Agregar Habilidad
+                    </button>
                 </section>
+
+                <!-- Idiomas -->
+                <section class="section">
+                    <h2>Idiomas</h2>
+                    <div v-for="(lang, index) in resume.languages" :key="index" class="card-edit-item">
+                        <button type="button" class="btn-action btn-delete" @click="removeLanguage(index)">
+                            <i class="bi bi-trash-fill"></i> Borrar
+                        </button>
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label>Idioma</label>
+                                <input type="text" class="edit-input" v-model="lang.name" placeholder="Ej: Español / Inglés" />
+                            </div>
+                            <div class="form-group">
+                                <label>Nivel (%)</label>
+                                <input type="text" class="edit-input" v-model="lang.level" placeholder="Ej: 100% o 80%" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-action btn-add" @click="addLanguage">
+                        <i class="bi bi-plus-circle-fill"></i> Agregar Idioma
+                    </button>
+                </section>
+
+                <!-- Botón para Guardar Resume -->
+                <div class="actions-bar">
+                    <button type="button" class="btn btn-primary" @click="saveResumeData" :disabled="isSaving">
+                        <i class="bi" :class="isSaving ? 'bi-arrow-repeat spinner' : 'bi-floppy-fill'" style="font-size: 1rem;"></i>
+                        <span>{{ isSaving ? 'Guardando CV...' : 'Guardar CV' }}</span>
+                    </button>
+                </div>
+
             </div>
 
         </div>
@@ -549,10 +722,15 @@
                 const courses = ref([]);
                 const serverImages = ref([]);
 
-                // Datos de Resume
+                // Estrutura Completa de Resume
                 const resume = ref({
-                    experiences: [],
-                    skills: ''
+                    profile: { name: '', email: '', linkedin: '', location: '' },
+                    committees: [],
+                    experience: [],
+                    education: [],
+                    courses: [],
+                    skills: [],
+                    languages: []
                 });
 
                 // --- Datalists Computados ---
@@ -606,7 +784,6 @@
                             checkingAuth.value = false;
                             loadDashboardData();
                         } else {
-                            // Si retorna 401 u otro código no exitoso, regresar a login.html
                             window.location.href = 'login.html';
                         }
                     } catch (error) {
@@ -660,7 +837,15 @@
                         const resumeRes = await fetch(API_RESUME_URL, { credentials: 'include' });
                         if (resumeRes.ok) {
                             const data = await resumeRes.json();
-                            resume.value = data;
+                            resume.value = {
+                                profile: data.profile || { name: '', email: '', linkedin: '', location: '' },
+                                committees: Array.isArray(data.committees) ? data.committees : [],
+                                experience: Array.isArray(data.experience) ? data.experience : [],
+                                education: Array.isArray(data.education) ? data.education : [],
+                                courses: Array.isArray(data.courses) ? data.courses : [],
+                                skills: Array.isArray(data.skills) ? data.skills : [],
+                                languages: Array.isArray(data.languages) ? data.languages : []
+                            };
                         }
                     } catch (err) {
                         console.warn('Error al cargar datos de Resume:', err);
@@ -709,13 +894,66 @@
                 };
 
                 // --- Métodos de Edición de Resume ---
-                const addExperience = () => {
-                    if (!resume.value.experiences) resume.value.experiences = [];
-                    resume.value.experiences.push({ role: '', company: '', period: '', details: '' });
+                const addCommittee = () => {
+                    resume.value.committees.push({ title: '', year: '', link: '' });
+                };
+                const removeCommittee = (index) => {
+                    resume.value.committees.splice(index, 1);
                 };
 
+                const addExperience = () => {
+                    resume.value.experience.push({ role: '', company: '', period: '', details: [] });
+                };
                 const removeExperience = (index) => {
-                    resume.value.experiences.splice(index, 1);
+                    resume.value.experience.splice(index, 1);
+                };
+
+                const addExperienceDetail = (expIndex) => {
+                    if (!resume.value.experience[expIndex].details) {
+                        resume.value.experience[expIndex].details = [];
+                    }
+                    resume.value.experience[expIndex].details.push({ text: '', link: '' });
+                };
+                const removeExperienceDetail = (expIndex, dIndex) => {
+                    resume.value.experience[expIndex].details.splice(dIndex, 1);
+                };
+
+                const addEducation = () => {
+                    resume.value.education.push({ name: '', university: '', period: '', details: [] });
+                };
+                const removeEducation = (index) => {
+                    resume.value.education.splice(index, 1);
+                };
+
+                const addEducationDetail = (eduIndex) => {
+                    if (!resume.value.education[eduIndex].details) {
+                        resume.value.education[eduIndex].details = [];
+                    }
+                    resume.value.education[eduIndex].details.push('');
+                };
+                const removeEducationDetail = (eduIndex, dIndex) => {
+                    resume.value.education[eduIndex].details.splice(dIndex, 1);
+                };
+
+                const addResumeCourse = () => {
+                    resume.value.courses.push({ details: '', link: '' });
+                };
+                const removeResumeCourse = (index) => {
+                    resume.value.courses.splice(index, 1);
+                };
+
+                const addSkill = () => {
+                    resume.value.skills.push('');
+                };
+                const removeSkill = (index) => {
+                    resume.value.skills.splice(index, 1);
+                };
+
+                const addLanguage = () => {
+                    resume.value.languages.push({ name: '', level: '100%' });
+                };
+                const removeLanguage = (index) => {
+                    resume.value.languages.splice(index, 1);
                 };
 
                 const saveResumeData = async () => {
@@ -729,10 +967,10 @@
                         });
 
                         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                        showToast('¡Resume actualizado con éxito!');
+                        showToast('¡CV actualizado con éxito!');
                     } catch (error) {
                         console.error('Error al guardar Resume:', error);
-                        showToast('Error al guardar el Resume', true);
+                        showToast('Error al guardar el CV en el servidor', true);
                     } finally {
                         isSaving.value = false;
                     }
@@ -785,8 +1023,22 @@
                     addCourse,
                     removeCourse,
                     saveBioData,
+                    addCommittee,
+                    removeCommittee,
                     addExperience,
                     removeExperience,
+                    addExperienceDetail,
+                    removeExperienceDetail,
+                    addEducation,
+                    removeEducation,
+                    addEducationDetail,
+                    removeEducationDetail,
+                    addResumeCourse,
+                    removeResumeCourse,
+                    addSkill,
+                    removeSkill,
+                    addLanguage,
+                    removeLanguage,
                     saveResumeData,
                     handleLogout
                 };
