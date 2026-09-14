@@ -391,6 +391,13 @@
                 <section class="section">
                     <h2>Badges (IDs de Credly)</h2>
                     <div v-for="(badge, index) in badges" :key="index" class="badge-input-group">
+                        <!-- Reordenar Badges -->
+                        <button type="button" class="btn-action" @click="moveItem(badges, index, -1)" :disabled="index === 0">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn-action" @click="moveItem(badges, index, 1)" :disabled="index === badges.length - 1">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
                         <input type="text" v-model="badges[index]" class="edit-input" placeholder="ID de la insignia">
                         <button type="button" class="btn-action btn-delete" @click="removeBadge(index)">
                             <i class="bi bi-trash-fill"></i>
@@ -405,9 +412,18 @@
                 <section class="section">
                     <h2>Academia</h2>
                     <div v-for="(item, index) in academic" :key="index" class="card-edit-item">
+                        <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.25rem;">
+                            <button type="button" class="btn-action" @click="moveItem(academic, index, -1)" :disabled="index === 0">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <button type="button" class="btn-action" @click="moveItem(academic, index, 1)" :disabled="index === academic.length - 1">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
                         <button type="button" class="btn-action btn-delete" @click="removeAcademic(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
+                        <br/>
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label>Título / Carrera</label>
@@ -442,9 +458,18 @@
                 <section class="section">
                     <h2>Cursos y Certificaciones</h2>
                     <div v-for="(course, index) in courses" :key="index" class="card-edit-item">
+                        <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.25rem;">
+                            <button type="button" class="btn-action" @click="moveItem(courses, index, -1)" :disabled="index === 0">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <button type="button" class="btn-action" @click="moveItem(courses, index, 1)" :disabled="index === courses.length - 1">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
                         <button type="button" class="btn-action btn-delete" @click="removeCourse(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
+                        <br/>
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label>Nombre del Curso</label>
@@ -994,6 +1019,19 @@
                     }
                 };
 
+                // Método universal para cambiar posiciones de arreglos reactivos
+                const moveItem = (listArray, index, direction) => {
+                    const targetIndex = index + direction;
+                    
+                    // Validar límites del arreglo
+                    if (targetIndex < 0 || targetIndex >= listArray.length) return;
+                    
+                    // Intercambio de posición utilizando destructuring de JS
+                    const temp = listArray[index];
+                    listArray[index] = listArray[targetIndex];
+                    listArray[targetIndex] = temp;
+                };
+
                 // --- Ciclo de Vida ---
                 onMounted(() => {
                     const savedTheme = localStorage.getItem('darkMode');
@@ -1019,6 +1057,7 @@
                     availableImages,
                     sharedTypes,
                     sharedIssuers,
+                    moveItem,
                     handleToggleTheme,
                     addBadge,
                     removeBadge,
