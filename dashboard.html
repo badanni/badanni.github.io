@@ -539,9 +539,18 @@
                 <section class="section">
                     <h2>Comités Técnicos ISO/INEN</h2>
                     <div v-for="(item, index) in resume.committees" :key="index" class="card-edit-item">
+                        <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.25rem;">
+                            <button type="button" class="btn-action" @click="moveItem(resume.committees, index, -1)" :disabled="index === 0">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <button type="button" class="btn-action" @click="moveItem(resume.committees, index, 1)" :disabled="index === resume.committees.length - 1">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
                         <button type="button" class="btn-action btn-delete" @click="removeCommittee(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
+                        <br/>
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label>Título del Comité</label>
@@ -566,9 +575,18 @@
                 <section class="section">
                     <h2>Experiencia Laboral</h2>
                     <div v-for="(exp, index) in resume.experience" :key="index" class="card-edit-item">
+                        <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.25rem;">
+                            <button type="button" class="btn-action" @click="moveItem(resume.experience, index, -1)" :disabled="index === 0">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <button type="button" class="btn-action" @click="moveItem(resume.experience, index, 1)" :disabled="index === resume.experience.length - 1">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
                         <button type="button" class="btn-action btn-delete" @click="removeExperience(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
+                        <br/>
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label>Cargo / Rol</label>
@@ -588,6 +606,13 @@
                         <div class="nested-box">
                             <label style="font-weight: 600; font-size: 0.85rem;">Detalles / Funciones</label>
                             <div v-for="(detail, dIdx) in exp.details" :key="dIdx" class="badge-input-group" style="margin-top: 0.5rem;">
+                                <!-- Reordenar Badges -->
+                                <button type="button" class="btn-action" @click="moveItem(exp.details, dIdx, -1)" :disabled="dIdx === 0">
+                                    <i class="bi bi-arrow-up"></i>
+                                </button>
+                                <button type="button" class="btn-action" @click="moveItem(exp.details, dIdx, 1)" :disabled="dIdx === exp.details.length - 1">
+                                    <i class="bi bi-arrow-down"></i>
+                                </button>
                                 <input type="text" v-model="detail.text" class="edit-input" placeholder="Descripción de la función">
                                 <input type="url" v-model="detail.link" class="edit-input" style="max-width: 200px;" placeholder="URL Respaldo (opcional)">
                                 <button type="button" class="btn-action btn-delete" @click="removeExperienceDetail(index, dIdx)">
@@ -608,9 +633,18 @@
                 <section class="section">
                     <h2>Educación</h2>
                     <div v-for="(edu, index) in resume.education" :key="index" class="card-edit-item">
+                        <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.25rem;">
+                            <button type="button" class="btn-action" @click="moveItem(resume.education, index, -1)" :disabled="index === 0">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <button type="button" class="btn-action" @click="moveItem(resume.education, index, 1)" :disabled="index === resume.education.length - 1">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
                         <button type="button" class="btn-action btn-delete" @click="removeEducation(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
+                        <br/>
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label>Título / Titulación</label>
@@ -649,6 +683,12 @@
                 <section class="section">
                     <h2>Cursos y Certificados (CV)</h2>
                     <div v-for="(item, index) in resume.courses" :key="index" class="card-edit-item">
+                        <button type="button" class="btn-action" @click="moveItem(resume.courses, index, -1)" :disabled="index === 0">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn-action" @click="moveItem(resume.courses, index, 1)" :disabled="index === resume.courses.length - 1">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
                         <button type="button" class="btn-action btn-delete" @click="removeResumeCourse(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
@@ -670,6 +710,12 @@
                 <section class="section">
                     <h2>Habilidades</h2>
                     <div v-for="(skill, index) in resume.skills" :key="index" class="badge-input-group">
+                        <button type="button" class="btn-action" @click="moveItem(resume.skills, index, -1)" :disabled="index === 0">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn-action" @click="moveItem(resume.skills, index, 1)" :disabled="index === resume.skills.length - 1">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
                         <input type="text" v-model="resume.skills[index]" class="edit-input" placeholder="Ej: JavaScript / Docker">
                         <button type="button" class="btn-action btn-delete" @click="removeSkill(index)">
                             <i class="bi bi-trash-fill"></i>
@@ -684,6 +730,12 @@
                 <section class="section">
                     <h2>Idiomas</h2>
                     <div v-for="(lang, index) in resume.languages" :key="index" class="card-edit-item">
+                        <button type="button" class="btn-action" @click="moveItem(resume.languages, index, -1)" :disabled="index === 0">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn-action" @click="moveItem(resume.languages, index, 1)" :disabled="index === resume.languages.length - 1">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
                         <button type="button" class="btn-action btn-delete" @click="removeLanguage(index)">
                             <i class="bi bi-trash-fill"></i> Borrar
                         </button>
